@@ -10,6 +10,6 @@ RUN chown -R nginx:nginx /etc/nginx/ && \
 
 RUN rm /etc/nginx/conf.d/default.conf
 
-COPY ./docker/api.nginx.conf /etc/nginx/conf.d/default.conf
+COPY ./api.nginx.conf /etc/nginx/conf.d/default.conf
 
 WORKDIR /var/www
