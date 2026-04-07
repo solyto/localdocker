@@ -11,10 +11,12 @@ services:
       - ../api/storage/:/var/www/storage/:z
     ports:
       - "8000:8000"
+    depends_on:
+      - api
     networks:
       - backend
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost"]
+      test: ["CMD", "curl", "-f", "http://localhost:8000"]
       interval: 5s
       timeout: 3s
       retries: 5
