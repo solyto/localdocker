@@ -2,8 +2,8 @@ services:
   nginx:
     container_name: solyto-nginx
     build:
-      context: .
-      dockerfile: nginx.Dockerfile
+      context: ..
+      dockerfile: localdocker/nginx.Dockerfile
     env_file:
       - .env
     user: nginx
@@ -17,8 +17,8 @@ services:
   api:
     container_name: solyto-api
     build:
-      context: .
-      dockerfile: api.Dockerfile
+      context: ..
+      dockerfile: localdocker/api.Dockerfile
     depends_on:
       - mariadb
       - redis
@@ -33,8 +33,8 @@ services:
   app:
     container_name: solyto-app
     build:
-      context: .
-      dockerfile: app.Dockerfile
+      context: ..
+      dockerfile: localdocker/app.Dockerfile
     depends_on:
       - api
     env_file:
@@ -49,9 +49,7 @@ services:
 
   mariadb:
     container_name: solyto-mariadb
-    build:
-      context: .
-      dockerfile: mariadb.Dockerfile
+    image: mariadb:latest
     env_file:
       - .env
     volumes:
@@ -71,9 +69,7 @@ services:
 
   redis:
     container_name: solyto-redis
-    build:
-      context: .
-      dockerfile: redis.Dockerfile
+    image: redis:latest
     env_file:
       - .env
     volumes:
