@@ -13,6 +13,11 @@ services:
       - "8000:8000"
     networks:
       - backend
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
 
   api:
     container_name: ${PROJECT_NAME}-api
@@ -36,7 +41,9 @@ services:
       context: ..
       dockerfile: localdocker/app.Dockerfile
     depends_on:
-      - api
+      api:
+      nginx:
+        condition: service_healthy
     env_file:
       - .env
     user: "1000:1000"
