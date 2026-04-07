@@ -4,9 +4,6 @@ WORKDIR /app
 
 COPY ./app/ .
 
-RUN rm -f package-lock.json
-RUN rm -rf node_modules/
-
-RUN npm install --include=dev
+RUN npm ci
 
 CMD ["npm", "run", "dev"]
