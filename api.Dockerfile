@@ -34,4 +34,4 @@ RUN rm -rf /var/www/*
 COPY ./api/ /var/www
 RUN rm /var/www/bootstrap/cache/*
 
-RUN composer install --optimize-autoloader
+RUN composer install --optimize-autoloader --no-scripts
