@@ -42,6 +42,7 @@ services:
       dockerfile: localdocker/app.Dockerfile
     depends_on:
       api:
+        condition: service_started
       nginx:
         condition: service_healthy
     env_file:
