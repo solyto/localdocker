@@ -47,23 +47,6 @@ services:
     networks:
       - solyto
 
-  landing-page:
-    container_name: solyto-landing-page
-    build:
-      context: .
-      dockerfile: landing-page.Dockerfile
-    depends_on:
-      - api
-    env_file:
-      - .env
-    user: "1000:1000"
-    volumes:
-      - ../landing-page/:/app:z
-    ports:
-      - "5174:5174"
-    networks:
-      - solyto
-
   mariadb:
     container_name: solyto-mariadb
     build:
