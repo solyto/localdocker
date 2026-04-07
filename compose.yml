@@ -1,6 +1,6 @@
 services:
   nginx:
-    container_name: solyto-nginx
+    container_name: ${PROJECT_NAME}-nginx
     build:
       context: ..
       dockerfile: localdocker/nginx.Dockerfile
@@ -12,10 +12,10 @@ services:
     ports:
       - "8000:8000"
     networks:
-      - solyto
+      - backend
 
   api:
-    container_name: solyto-api
+    container_name: ${PROJECT_NAME}-api
     build:
       context: ..
       dockerfile: localdocker/api.Dockerfile
@@ -28,10 +28,10 @@ services:
     volumes:
       - ../api/:/var/www:z
     networks:
-      - solyto
+      - backend
 
   app:
-    container_name: solyto-app
+    container_name: ${PROJECT_NAME}-app
     build:
       context: ..
       dockerfile: localdocker/app.Dockerfile
@@ -45,37 +45,37 @@ services:
     ports:
       - "5173:5173"
     networks:
-      - solyto
+      - backend
 
   mariadb:
-    container_name: solyto-mariadb
+    container_name: ${PROJECT_NAME}-mariadb
     image: mariadb:latest
     env_file:
       - .env
     volumes:
       - mariadb_data:/var/lib/mysql
     networks:
-      - solyto
+      - backend
 
   postgres:
-    container_name: solyto-postgres
+    container_name: ${PROJECT_NAME}-postgres
     image: postgres:17
     env_file:
       - .env
     volumes:
       - pg_data:/var/lib/postgresql/data
     networks:
-      - solyto
+      - backend
 
   redis:
-    container_name: solyto-redis
+    container_name: ${PROJECT_NAME}-redis
     image: redis:latest
     env_file:
       - .env
     volumes:
       - redis_data:/data
     networks:
-      - solyto
+      - backend
 
 volumes:
   mariadb_data:
@@ -83,5 +83,5 @@ volumes:
   pg_data:
 
 networks:
-  solyto:
+  backend:
     driver: bridge
