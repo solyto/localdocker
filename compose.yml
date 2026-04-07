@@ -1,0 +1,108 @@
+services:
+  nginx:
+    container_name: solyto-nginx
+    build:
+      context: .
+      dockerfile: nginx.Dockerfile
+    env_file:
+      - .env
+    user: nginx
+    volumes:
+      - ../api/storage/:/var/www/storage/:z
+    ports:
+      - "8000:8000"
+    networks:
+      - solyto
+
+  api:
+    container_name: solyto-api
+    build:
+      context: .
+      dockerfile: api.Dockerfile
+    depends_on:
+      - mariadb
+      - redis
+    env_file:
+      - .env
+    user: "1000:1000"
+    volumes:
+      - ../api/:/var/www:z
+    networks:
+      - solyto
+
+  app:
+    container_name: solyto-app
+    build:
+      context: .
+      dockerfile: app.Dockerfile
+    depends_on:
+      - api
+    env_file:
+      - .env
+    user: "1000:1000"
+    volumes:
+      - ../app/:/app:z
+    ports:
+      - "5173:5173"
+    networks:
+      - solyto
+
+  landing-page:
+    container_name: solyto-landing-page
+    build:
+      context: .
+      dockerfile: landing-page.Dockerfile
+    depends_on:
+      - api
+    env_file:
+      - .env
+    user: "1000:1000"
+    volumes:
+      - ../landing-page/:/app:z
+    ports:
+      - "5174:5174"
+    networks:
+      - solyto
+
+  mariadb:
+    container_name: solyto-mariadb
+    build:
+      context: .
+      dockerfile: mariadb.Dockerfile
+    env_file:
+      - .env
+    volumes:
+      - mariadb_data:/var/lib/mysql
+    networks:
+      - solyto
+
+  postgres:
+    container_name: solyto-postgres
+    image: postgres:17
+    env_file:
+      - .env
+    volumes:
+      - pg_data:/var/lib/postgresql/data
+    networks:
+      - solyto
+
+  redis:
+    container_name: solyto-redis
+    build:
+      context: .
+      dockerfile: redis.Dockerfile
+    env_file:
+      - .env
+    volumes:
+      - redis_data:/data
+    networks:
+      - solyto
+
+volumes:
+  mariadb_data:
+  redis_data:
+  pg_data:
+
+networks:
+  solyto:
+    driver: bridge
