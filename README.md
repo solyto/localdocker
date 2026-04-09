@@ -4,14 +4,15 @@ Docker Compose setup for running the full Solyto stack locally. Not meant to be 
 
 ## Services
 
-| Service       | Port | Notes                          |
-|---------------|------|--------------------------------|
-| nginx         | 8000 | Reverse proxy for the API      |
-| api           | —    | Laravel backend                |
-| app           | 5173 | Vite dev server                |
-| mariadb       | —    | Internal only                  |
-| postgres      | —    | Internal only                  |
-| redis         | —    | Internal only                  |
+| Service      | Port | Notes                          |
+|--------------|------|--------------------------------|
+| nginx        | 8000 | Reverse proxy for the API      |
+| api          | —    | Laravel backend                |
+| app          | 5173 | Vite dev server                |
+| landing-page | 5174 | Vite dev server                |
+| mariadb      | —    | Internal only                  |
+| postgres     | —    | Internal only                  |
+| redis        | —    | Internal only                  |
 
 ## Setup
 

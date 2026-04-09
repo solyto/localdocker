@@ -28,7 +28,7 @@ services:
       dockerfile: localdocker/api.Dockerfile
     depends_on:
       mariadb:
-        condition: service_started
+        condition: service_healthy
       redis:
         condition: service_started
       postgres:
@@ -61,6 +61,18 @@ services:
     networks:
       - backend
 
+  node:
+    container_name: ${PROJECT_NAME}-landing-page
+    env_file: ".env"
+    build:
+      context: ..
+      dockerfile: localdocker/landing-page.Dockerfile
+    ports:
+      - "5174:5174"
+    restart: unless-stopped
+    networks:
+      - api
+
   mariadb:
     container_name: ${PROJECT_NAME}-mariadb
     image: mariadb:latest
@@ -70,6 +82,11 @@ services:
       - mariadb_data:/var/lib/mysql
     networks:
       - backend
+    healthcheck:
+      test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
 
   postgres:
     container_name: ${PROJECT_NAME}-postgres
