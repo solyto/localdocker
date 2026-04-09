@@ -56,11 +56,7 @@ docker compose down -v
 
 Each service has its own Dockerfile in this directory rather than in the service repo itself, so local build config stays separate from the application code.
 
-
-
 ---
-
-
 
 ## Licensing
 
