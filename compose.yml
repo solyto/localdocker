@@ -61,7 +61,7 @@ services:
     networks:
       - backend
 
-  node:
+  landing-page:
     container_name: ${PROJECT_NAME}-landing-page
     env_file: ".env"
     build:
@@ -71,7 +71,7 @@ services:
       - "5174:5174"
     restart: unless-stopped
     networks:
-      - api
+      - backend
 
   mariadb:
     container_name: ${PROJECT_NAME}-mariadb
