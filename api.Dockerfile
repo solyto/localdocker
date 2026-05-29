@@ -33,3 +33,5 @@ RUN rm -rf /var/www/*
 
 COPY ./api/ /var/www
 RUN rm /var/www/bootstrap/cache/*
+
+RUN printf '#!/bin/sh\nexec php artisan "app:$*"\n' > /usr/local/bin/so && chmod +x /usr/local/bin/so

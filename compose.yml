@@ -87,6 +87,14 @@ services:
     networks:
       - backend
 
+  mailpit:
+    container_name: ${PROJECT_NAME}-mailpit
+    image: axllent/mailpit:latest
+    networks:
+      - backend
+    ports:
+      - "8025:8025"
+
   mariadb:
     container_name: ${PROJECT_NAME}-mariadb
     image: mariadb:latest
