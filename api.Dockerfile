@@ -1,4 +1,6 @@
+ARG ENABLE_COVERAGE=0
 FROM php:8.4-fpm
+ARG ENABLE_COVERAGE=0
 
 WORKDIR /var/www
 
@@ -28,6 +30,10 @@ RUN docker-php-ext-install pdo_mysql pdo_pgsql mbstring exif pcntl bcmath gd int
 
 RUN pecl install redis imagick
 RUN docker-php-ext-enable redis imagick
+
+RUN if [ "$ENABLE_COVERAGE" = "1" ]; then \
+        pecl install pcov && docker-php-ext-enable pcov; \
+    fi
 
 RUN rm -rf /var/www/*
 
