@@ -91,7 +91,6 @@ services:
       - ../landing-page/:/app:z
     ports:
       - "5174:5174"
-    restart: unless-stopped
     networks:
       - backend
 
