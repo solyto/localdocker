@@ -41,6 +41,26 @@ services:
     networks:
       - backend
 
+  # One-shot test runner. Built from the same api image with pcov enabled for
+  # coverage. Deliberately has NO database/redis dependencies: the Pest suite
+  # is fully self-contained (sqlite + array cache + sync queue) via TestCase.php.
+  test:
+    container_name: ${PROJECT_NAME}-test
+    build:
+      context: ..
+      dockerfile: localdocker/api.Dockerfile
+      args:
+        ENABLE_COVERAGE: "1"
+    env_file:
+      - .env
+    user: "1000:1000"
+    volumes:
+      - ../api/:/var/www:z
+    networks:
+      - backend
+    profiles:
+      - test
+
   app:
     container_name: ${PROJECT_NAME}-app
     build:
@@ -71,7 +91,6 @@ services:
       - ../landing-page/:/app:z
     ports:
       - "5174:5174"
-    restart: unless-stopped
     networks:
       - backend
 
