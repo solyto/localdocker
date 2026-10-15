@@ -37,6 +37,8 @@ RUN if [ "$ENABLE_COVERAGE" = "1" ]; then \
 
 RUN rm -rf /var/www/*
 
+COPY localdocker/php.ini /usr/local/etc/php/conf.d/solyto-defaults.ini
+
 COPY ./api/ /var/www
 RUN rm /var/www/bootstrap/cache/*
 
