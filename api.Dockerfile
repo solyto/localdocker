@@ -40,6 +40,6 @@ RUN rm -rf /var/www/*
 COPY localdocker/php.ini /usr/local/etc/php/conf.d/solyto-defaults.ini
 
 COPY ./api/ /var/www
-RUN rm /var/www/bootstrap/cache/*
+RUN rm -f /var/www/bootstrap/cache/*
 
 RUN printf '#!/bin/sh\nexec php artisan "app:$*"\n' > /usr/local/bin/so && chmod +x /usr/local/bin/so
